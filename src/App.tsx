@@ -6,7 +6,7 @@ import './App.css';
 
 // Replace these with your actual published CSV URLs from Google Sheets
 const CSV_URLS = {
-  ryan: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4Xxio2fLl2_Y6tgc_xvOVV-L59SgnAnquAXZGDCQx5lVUcNqAMerHtMv3N2LJs1mrH79m4XGc_yQe/pubhtml?gid=0&single=true',
+  ryan: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4Xxio2fLl2_Y6tgc_xvOVV-L59SgnAnquAXZGDCQx5lVUcNqAMerHtMv3N2LJs1mrH79m4XGc_yQe/pub?gid=0&single=true&output=csv',
   other: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS-placeholder-other/pub?output=csv'
 };
 

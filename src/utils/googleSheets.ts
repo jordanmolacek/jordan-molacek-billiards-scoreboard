@@ -5,19 +5,39 @@ export interface GameData {
   location: string;
 }
 
+const parseCSVLine = (line: string): string[] => {
+  const result: string[] = [];
+  let current = '';
+  let inQuotes = false;
+  
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === ',' && !inQuotes) {
+      result.push(current.trim());
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  result.push(current.trim());
+  return result;
+};
+
 export const fetchGoogleSheetData = async (csvUrl: string): Promise<GameData[]> => {
   try {
     const response = await fetch(csvUrl);
     const csvText = await response.text();
     
-    // Simple CSV parser
-    const rows = csvText.split('\n').filter(row => row.trim() !== '');
+    // Normalize line endings and split
+    const rows = csvText.replace(/\r/g, '').split('\n').filter(row => row.trim() !== '');
     if (rows.length < 2) return [];
 
-    const headers = rows[0].split(',').map(h => h.trim().toLowerCase());
+    const headers = parseCSVLine(rows[0]).map(h => h.toLowerCase());
     
     return rows.slice(1).map(row => {
-      const values = row.split(',').map(v => v.trim());
+      const values = parseCSVLine(row);
       const data: any = {};
       headers.forEach((header, index) => {
         data[header] = values[index];
