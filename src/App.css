@@ -1,38 +1,185 @@
+:root {
+  --bg-color: #0f172a;
+  --card-bg: #1e293b;
+  --text-color: #f8fafc;
+  --text-dim: #94a3b8;
+  --accent-color: #38bdf8;
+  --win-color: #22c55e;
+  --loss-color: #ef4444;
+  --header-height: 70px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+/* Navbar Styles */
+.navbar {
+  height: var(--header-height);
+  background-color: var(--card-bg);
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 0 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-.App-link {
-  color: #61dafb;
+.navbar h1 {
+  font-size: 1.5rem;
+  margin: 0;
+  color: var(--accent-color);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-link:hover {
+  color: var(--text-color);
+}
+
+.nav-link.active {
+  color: var(--accent-color);
+  border-bottom: 2px solid var(--accent-color);
+}
+
+/* Content Area */
+.content {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Scoreboard Styles */
+.scoreboard-container h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.summary-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background-color: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stat-card h3 {
+  margin: 0 0 1rem 0;
+  color: var(--text-dim);
+  font-size: 1.1rem;
+}
+
+.win-count {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--accent-color);
+}
+
+.stat-card span {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Table Styles */
+.games-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+
+.games-table th {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  text-align: left;
+  color: var(--text-dim);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.games-table td {
+  padding: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.row-win .winner-cell {
+  color: var(--win-color);
+  font-weight: 600;
+}
+
+.row-loss .winner-cell {
+  color: var(--loss-color);
+  font-weight: 600;
+}
+
+/* Footer */
+.footer {
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 4rem;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: var(--loss-color);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 1rem;
+    gap: 1rem;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .games-table {
+    display: block;
+    overflow-x: auto;
   }
 }

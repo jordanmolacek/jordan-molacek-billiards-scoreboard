@@ -1,46 +1,39 @@
-# Getting Started with Create React App
+# Jordan Molacek Billiards Scoreboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, automated billiards scoreboard website that pulls data from Google Sheets.
 
-## Available Scripts
+## Setup Instructions
 
-In the project directory, you can run:
+### 1. Google Sheets Integration
+To display your games, you need to publish your Google Sheet as a CSV:
+1. Open your Google Sheet.
+2. Go to `File > Share > Publish to the web`.
+3. Select the specific tab (e.g., "Jordan vs Ryan") and choose `Comma-separated values (.csv)`.
+4. Copy the generated URL.
+5. In `src/App.tsx`, update the `CSV_URLS` object with your actual URLs.
 
-### `npm start`
+**Expected Column Headers:**
+`Date, Player1, Player2, Score1, Score2, Winner, Notes`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 2. Firebase Setup
+1. Go to the [Firebase Console](https://console.firebase.google.com/).
+2. Create a new project named `jordan-molacek-billiards` (or update `.firebaserc` if you use a different name).
+3. Enable **Hosting**.
+4. Generate a Service Account Key:
+   - Go to `Project Settings > Service accounts`.
+   - Click `Generate new private key`.
+   - Download the JSON file.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 3. GitHub Secrets
+To enable automated deployment, add these secrets to your GitHub repository:
+1. `FIREBASE_SERVICE_ACCOUNT_JORDAN_MOLACEK_BILLIARDS`: The entire content of the Service Account JSON file you downloaded.
+2. `GITHUB_TOKEN`: This is automatically provided by GitHub Actions, but ensure the workflow has "Read and write permissions" in `Settings > Actions > General`.
 
-### `npm test`
+## Local Development
+```bash
+npm install
+npm start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Deployment
+Push your changes to the `main` branch, and GitHub Actions will automatically build and deploy the site to Firebase Hosting.
