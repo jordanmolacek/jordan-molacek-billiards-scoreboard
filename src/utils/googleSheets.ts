@@ -1,11 +1,8 @@
 export interface GameData {
   date: string;
-  player1: string;
-  player2: string;
-  score1: number;
-  score2: number;
-  winner: string;
-  notes?: string;
+  jordanWins: number;
+  opponentWins: number;
+  location: string;
 }
 
 export const fetchGoogleSheetData = async (csvUrl: string): Promise<GameData[]> => {
@@ -15,6 +12,8 @@ export const fetchGoogleSheetData = async (csvUrl: string): Promise<GameData[]> 
     
     // Simple CSV parser
     const rows = csvText.split('\n').filter(row => row.trim() !== '');
+    if (rows.length < 2) return [];
+
     const headers = rows[0].split(',').map(h => h.trim().toLowerCase());
     
     return rows.slice(1).map(row => {
@@ -26,12 +25,9 @@ export const fetchGoogleSheetData = async (csvUrl: string): Promise<GameData[]> 
       
       return {
         date: data.date || '',
-        player1: data.player1 || '',
-        player2: data.player2 || '',
-        score1: parseInt(data.score1) || 0,
-        score2: parseInt(data.score2) || 0,
-        winner: data.winner || '',
-        notes: data.notes || ''
+        jordanWins: parseInt(data.jordan) || 0,
+        opponentWins: parseInt(data.opponent) || 0,
+        location: data.location || ''
       } as GameData;
     });
   } catch (error) {

@@ -13,7 +13,9 @@ To display your games, you need to publish your Google Sheet as a CSV:
 5. In `src/App.tsx`, update the `CSV_URLS` object with your actual URLs.
 
 **Expected Column Headers:**
-`Date, Player1, Player2, Score1, Score2, Winner, Notes`
+`Date, Jordan, Opponent, Location`
+
+*Note: The "Jordan" and "Opponent" columns should contain the number of wins for that date.*
 
 ### 2. Firebase Setup
 1. Go to the [Firebase Console](https://console.firebase.google.com/).

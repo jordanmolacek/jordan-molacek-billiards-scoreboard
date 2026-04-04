@@ -30,21 +30,18 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ csvUrl, opponentName }) => {
   }, [csvUrl]);
 
   const calculateStats = () => {
-    let jordanWins = 0;
-    let opponentWins = 0;
+    let totalJordanWins = 0;
+    let totalOpponentWins = 0;
 
     games.forEach(game => {
-      if (game.winner.toLowerCase() === 'jordan') {
-        jordanWins++;
-      } else if (game.winner.toLowerCase().includes(opponentName.toLowerCase())) {
-        opponentWins++;
-      }
+      totalJordanWins += game.jordanWins;
+      totalOpponentWins += game.opponentWins;
     });
 
-    return { jordanWins, opponentWins };
+    return { totalJordanWins, totalOpponentWins };
   };
 
-  const { jordanWins, opponentWins } = calculateStats();
+  const { totalJordanWins, totalOpponentWins } = calculateStats();
 
   if (loading) return <div className="loading">Loading scoreboard...</div>;
   if (error) return <div className="error">{error}</div>;
@@ -56,13 +53,13 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ csvUrl, opponentName }) => {
       <div className="summary-stats">
         <div className="stat-card">
           <h3>Jordan</h3>
-          <p className="win-count">{jordanWins}</p>
-          <span>Wins</span>
+          <p className="win-count">{totalJordanWins}</p>
+          <span>Total Wins</span>
         </div>
         <div className="stat-card">
           <h3>{opponentName}</h3>
-          <p className="win-count">{opponentWins}</p>
-          <span>Wins</span>
+          <p className="win-count">{totalOpponentWins}</p>
+          <span>Total Wins</span>
         </div>
       </div>
 
@@ -70,24 +67,30 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ csvUrl, opponentName }) => {
         <thead>
           <tr>
             <th>Date</th>
-            <th>Player 1</th>
-            <th>Player 2</th>
-            <th>Score</th>
-            <th>Winner</th>
-            <th>Notes</th>
+            <th>Jordan Wins</th>
+            <th>{opponentName} Wins</th>
+            <th>Location</th>
+            <th>Winner of the Day</th>
           </tr>
         </thead>
         <tbody>
-          {games.map((game, index) => (
-            <tr key={index} className={game.winner.toLowerCase() === 'jordan' ? 'row-win' : 'row-loss'}>
-              <td>{game.date}</td>
-              <td>{game.player1}</td>
-              <td>{game.player2}</td>
-              <td>{game.score1} - {game.score2}</td>
-              <td className="winner-cell">{game.winner}</td>
-              <td>{game.notes}</td>
-            </tr>
-          ))}
+          {games.map((game, index) => {
+            const dayWinner = game.jordanWins > game.opponentWins 
+              ? 'Jordan' 
+              : game.opponentWins > game.jordanWins 
+                ? opponentName 
+                : 'Tie';
+
+            return (
+              <tr key={index} className={dayWinner === 'Jordan' ? 'row-win' : dayWinner === 'Tie' ? '' : 'row-loss'}>
+                <td>{game.date}</td>
+                <td>{game.jordanWins}</td>
+                <td>{game.opponentWins}</td>
+                <td>{game.location}</td>
+                <td className="winner-cell">{dayWinner}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
