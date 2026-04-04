@@ -15,7 +15,12 @@ To display your games, you need to publish your Google Sheet as a CSV:
 **Expected Column Headers:**
 `Date, Jordan, Opponent, Location`
 
-*Note: The "Jordan" and "Opponent" columns should contain the number of wins for that date.*
+*   **Date:** The date of the games (e.g., 2024-05-20).
+*   **Jordan:** The number of wins Jordan had on that date.
+*   **Opponent:** The number of wins the opponent (e.g., Ryan) had on that date.
+*   **Location:** Where the games were played.
+
+The website will automatically sum the "Jordan" and "Opponent" columns to show the total overall score.
 
 ### 2. Firebase Setup
 1. Go to the [Firebase Console](https://console.firebase.google.com/).
