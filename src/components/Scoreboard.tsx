@@ -43,6 +43,31 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ csvUrl, opponentName }) => {
 
   const { totalJordanWins, totalOpponentWins } = calculateStats();
 
+  const renderStars = (playerName: string, runsStr?: string) => {
+    const val = (runsStr || '').trim();
+    if (val === '') return null;
+    
+    let stars: { label: string; title: string }[] = [];
+    
+    // Check if it's a single integer (e.g., "2")
+    if (/^\d+$/.test(val)) {
+      const count = parseInt(val);
+      for (let i = 0; i < count; i++) {
+        stars.push({ label: '⭐', title: `${playerName} Run` });
+      }
+    } else {
+      // It's a list (e.g., "15, 20")
+      const list = val.split(/[,\s]+/).filter(r => r !== '');
+      list.forEach(run => {
+        stars.push({ label: '⭐', title: `${playerName} High Run: ${run}` });
+      });
+    }
+    
+    return stars.map((star, i) => (
+      <span key={i} className="gold-star" title={star.title}>{star.label}</span>
+    ));
+  };
+
   if (loading) return <div className="loading">Loading scoreboard...</div>;
   if (error) return <div className="error">{error}</div>;
 
@@ -84,8 +109,14 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ csvUrl, opponentName }) => {
             return (
               <tr key={index} className={dayWinner === 'Jordan' ? 'row-win' : dayWinner === 'Tie' ? '' : 'row-loss'}>
                 <td>{game.date}</td>
-                <td>{game.jordanWins}</td>
-                <td>{game.opponentWins}</td>
+                <td>
+                  {game.jordanWins}
+                  {renderStars('Jordan', game.jordanRuns)}
+                </td>
+                <td>
+                  {game.opponentWins}
+                  {renderStars(opponentName, game.opponentRuns)}
+                </td>
                 <td>{game.location}</td>
                 <td className="winner-cell">{dayWinner}</td>
               </tr>

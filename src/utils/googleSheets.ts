@@ -3,6 +3,8 @@ export interface GameData {
   jordanWins: number;
   opponentWins: number;
   location: string;
+  jordanRuns?: string;
+  opponentRuns?: string;
 }
 
 const parseCSVLine = (line: string): string[] => {
@@ -14,6 +16,8 @@ const parseCSVLine = (line: string): string[] => {
     const char = line[i];
     if (char === '"') {
       inQuotes = !inQuotes;
+      // Skip adding the quote character itself to the field
+      continue;
     } else if (char === ',' && !inQuotes) {
       result.push(current.trim());
       current = '';
@@ -47,7 +51,9 @@ export const fetchGoogleSheetData = async (csvUrl: string): Promise<GameData[]> 
         date: data.date || '',
         jordanWins: parseInt(data.jordan) || 0,
         opponentWins: parseInt(data.opponent) || 0,
-        location: data.location || ''
+        location: data.location || '',
+        jordanRuns: (data['jordan runs'] || '').toString(),
+        opponentRuns: (data['opponent runs'] || '').toString()
       } as GameData;
     });
   } catch (error) {

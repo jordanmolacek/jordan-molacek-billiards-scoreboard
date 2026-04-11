@@ -9,8 +9,8 @@ const Navbar: React.FC = () => {
         <NavLink to="/ryan" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
           vs Ryan
         </NavLink>
-        <NavLink to="/other" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
-          vs Other
+        <NavLink to="/adam" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+          vs Adam
         </NavLink>
       </div>
     </nav>

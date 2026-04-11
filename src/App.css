@@ -152,6 +152,24 @@ body {
   font-weight: 600;
 }
 
+.gold-star {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-size: 1.1rem;
+  vertical-align: middle;
+  filter: drop-shadow(0 0 2px rgba(251, 191, 36, 0.4));
+  cursor: help;
+}
+
+.runs-info {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.run-entry {
+  white-space: nowrap;
+}
+
 /* Footer */
 .footer {
   padding: 2rem;
